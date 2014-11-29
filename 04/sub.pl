@@ -37,10 +37,14 @@ sub add2 {
         $sum += $_;   
     }
     return $sum;
-
 }
 
 my $result = add2(30, 6);
+
+# test
+if ($result == 36) {
+    print "add2 ok\n"
+}
 
 print $result;
 print "\n"
