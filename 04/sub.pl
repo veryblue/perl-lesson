@@ -30,7 +30,17 @@ sub div {
     return $left / $right;
 }
 
-my $result = div(30, 6);
+sub add2 {
+    my $sum = 0;
+
+    for(@_) {
+        $sum += $_;   
+    }
+    return $sum;
+
+}
+
+my $result = add2(30, 6);
 
 print $result;
 print "\n"
