@@ -56,15 +56,17 @@ Welcome to the Mojolicious real-time web framework!
 <head><title><%= $title %></title></head>
 <body style='padding: 30px;'>
  <% for my $i(1..$num) { %>
+  <p>
   <% if ($i % 15 == 0) { %>
-    <p><%= $i %> fizzbuzz</p>
+    <%= $i %> fizzbuzz
   <% } elsif ($i % 5 == 0) { %>
-    <p><%= $i %> buzz</p>
+    <%= $i %> buzz
   <% } elsif ($i % 3 == 0) { %>
-    <p><%= $i %> fizz</p>
+    <%= $i %> fizz
   <% } else { %>
-    <p><%= $i %></p>
+    <%= $i %>
   <% } %>
+  </p>
  <% } %>
 </body>
 </html>
