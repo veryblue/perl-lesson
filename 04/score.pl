@@ -48,3 +48,80 @@ my $uzulla = {
     php         => 4,
     binary      => 0.01,
 };
+
+
+# 1. 点数の合計
+# 2. 言語毎の平均
+# 3. 五段階評価
+# 4. 所属毎の perl のスコアが 60 以上の人の名前を格納する
+# 5. JSON風Dumper
+
+print $uzulla->{perl} ."\n";
+
+my @people = ($papix, $boolfool, $moznion, $binarian, $uzulla);
+
+my @languages = qw/ perl python ruby php binary /;
+
+for my $person (@people) {
+    print "name: $person->{name}\n";
+
+    my $sum = 0;
+    for my $language (@languages) {
+        $sum += $person->{$language};
+    }
+    $person->{sum} = $sum;
+
+    $sum += $person->{perl};
+}
+
+use Data::Dumper;
+print Dumper(@people);
+
+for my $person (@people) {
+    print "$person->{name} さんの合計点は、 $person->{sum}\n";
+}
+
+print "--------------\n";
+
+my %avarage = (
+
+    );
+
+for my $person (@people) {
+    
+    $avarage{$person} = 0;
+    
+
+}
+
+#my %language_average = (
+#        perl => 0,
+#        python => 0,
+#    )
+#for my $language (@languages) {
+#
+#    my $sum = 0;
+#    for my $person (@people){
+#        print "$language : $person->{$language} \n";
+#        
+#    }
+#
+#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
