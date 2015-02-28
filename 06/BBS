@@ -4,15 +4,17 @@ use Mojolicious::Lite;
 # Documentation browser under "/perldoc"
 #plugin 'PODRenderer';
 
+my @entries = ();
 get '/' => sub {
   my $c = shift;
+  $c->stash(entries => \@entries);
   $c->render(template => 'index');
 };
 
 post '/post' => sub {
   my $c = shift;
   my $entry = $c->param('body');
-
+  push @entries, $entry;
   $c->stash(entry => $entry);
   $c->render(template => 'post');
 };
@@ -27,6 +29,9 @@ __DATA__
   %= text_field 'body'
   %= submit_button '投稿する'
 % end
+% for my $entry (@{$entries}) {
+    <p><%= $entry %></p>
+% }
 
 @@ post.html.ep
 % layout 'default';
