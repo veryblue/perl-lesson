@@ -16,7 +16,7 @@ post '/post' => sub {
   my $entry = $c->param('body');
   push @entries, $entry;
   $c->stash(entry => $entry);
-  $c->render(template => 'post');
+  $c->redirect_to('/');
 };
 
 app->start;
@@ -32,15 +32,6 @@ __DATA__
 % for my $entry (@{$entries}) {
     <p><%= $entry %></p>
 % }
-
-@@ post.html.ep
-% layout 'default';
-% title '出力';
-%= form_for '/post' => method => 'POST' => begin
-  %= text_field 'body'
-  %= submit_button '投稿する'
-% end
-<p><%= $entry %></p>
 
 @@ layouts/default.html.ep
 <!DOCTYPE html>
