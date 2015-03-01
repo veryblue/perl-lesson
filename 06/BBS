@@ -1,21 +1,27 @@
 #!/usr/bin/env perl
 use Mojolicious::Lite;
 
+use DBIx::Sunny;
+app->attr(dbh => sub { DBIx::Sunny->connect('dbi:mysql:dbname=bbs', 'root','') });
+
 # Documentation browser under "/perldoc"
 #plugin 'PODRenderer';
 
-my @entries = ();
 get '/' => sub {
   my $c = shift;
-  $c->stash(entries => \@entries);
+  my $entries = app->dbh->select_all('SELECT * FROM entry order by created_at desc');
+
+  use Data::Dumper;
+  warn Dumper $entries;
+ 
+  $c->stash(entries => $entries);
   $c->render(template => 'index');
 };
 
 post '/post' => sub {
   my $c = shift;
   my $entry = $c->param('body');
-  push @entries, $entry;
-  $c->stash(entry => $entry);
+  app->dbh->query('INSERT INTO entry (body) VALUES (?)', [$entry]);
   $c->redirect_to('/');
 };
 
@@ -29,8 +35,8 @@ __DATA__
   %= text_field 'body'
   %= submit_button '投稿する'
 % end
-% for my $entry (@{$entries}) {
-    <p><%= $entry %></p>
+% for my $entry (@$entries) {
+    <p><%= $entry->{body} %></p>
 % }
 
 @@ layouts/default.html.ep
